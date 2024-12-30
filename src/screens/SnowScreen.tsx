@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, Dimensions, StyleSheet } from 'react-native';
 
-import Snow from './Snow';
+import Snow from '../components/snow/Snow';
 import BackgroundImage from '../../assets/images/Winter.png';
 
 const { width, height } = Dimensions.get('window');

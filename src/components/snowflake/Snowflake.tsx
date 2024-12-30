@@ -1,5 +1,6 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import {Animated, StyleSheet, Easing} from 'react-native';
+import { SnowflakeConfig, SnowflakeProps } from './props';
 
 const styles = StyleSheet.create({
   snowflake: {
@@ -11,8 +12,8 @@ const styles = StyleSheet.create({
 const START_Y_POSITION = -50;
 const SNOWFLAKE_TYPES = ['❄', '❅', '❆'];
 
-export default function Snowflake({scene}) {
-  const [config, setConfig] = useState(() => getConfig(scene));
+export default function Snowflake({scene}: SnowflakeProps) {
+  const [config, setConfig] = useState<SnowflakeConfig>(() => getConfig(scene));
   const animatedY = useRef(new Animated.Value(START_Y_POSITION)).current;
   const animatedRotation = useRef(new Animated.Value(0)).current;
   const animatedSwing = useRef(new Animated.Value(0)).current;
@@ -68,17 +69,17 @@ export default function Snowflake({scene}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config]);
 
-  const rotate = animatedRotation.interpolate({
+  const rotate = useMemo(() => animatedRotation.interpolate({
     inputRange: [0, 1],
     outputRange: config.rotationDirection
       ? ['0deg', '360deg']
       : ['360deg', '0deg'],
-  });
+  }), [animatedRotation, config.rotationDirection]);
 
-  const translateX = animatedSwing.interpolate({
+  const translateX = useMemo(() => animatedSwing.interpolate({
     inputRange: [-1, 1],
     outputRange: [-config.swingAmplitude, config.swingAmplitude],
-  });
+  }), [animatedSwing, config.swingAmplitude]);
 
   return (
     <Animated.Text
