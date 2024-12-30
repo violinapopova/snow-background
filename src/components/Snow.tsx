@@ -4,7 +4,7 @@ import Snowflake from "./Snowflake";
 
 const dimensions = Dimensions.get("window");
 
-export default function Snow({ snowflakesCount = 1 }) {
+export default function Snow({ snowflakesCount = 100 }) {
     return <View 
                 style={[styles.container, 
                     { width: dimensions.width, height: dimensions.height }]

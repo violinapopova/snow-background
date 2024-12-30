@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, Dimensions, StyleSheet } from 'react-native';
 
 import Snow from './Snow';
-import BackgroundImage from '../../assets/images/winterBg.jpg';
+import BackgroundImage from '../../assets/images/FinlandBG.png';
 
 const { width, height } = Dimensions.get('window');
 
