@@ -9,12 +9,12 @@
 
 2. Install dependencies:
     ```sh
-    yarn install
+    yarn
     ```
 
-3. Start the project:
+3. Start the Metro server:
     ```sh
-    yarn start
+    npx expo start
     ```
 
 ## Usage
