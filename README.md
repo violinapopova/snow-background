@@ -3,7 +3,7 @@
 
 1. Clone the repository:
     ```sh
-    git clone <repository-url>
+    git clone <https://github.com/violinapopova/snow-background.git>
     cd snow-background
     ```
 
