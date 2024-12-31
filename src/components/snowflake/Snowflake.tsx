@@ -1,22 +1,23 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import {Animated, StyleSheet, Easing} from 'react-native';
+import {Animated, Easing} from 'react-native';
 import { SnowflakeConfig, SnowflakeProps } from './props';
-
-const styles = StyleSheet.create({
-  snowflake: {
-    color: 'white',
-    position: 'absolute',
-  },
-});
+import { SnowflakeText } from './styles';
 
 const START_Y_POSITION = -50;
 const SNOWFLAKE_TYPES = ['❄', '❅', '❆'];
 
-export default function Snowflake({scene}: SnowflakeProps) {
+export default function Snowflake({ scene }: SnowflakeProps) {
   const [config, setConfig] = useState<SnowflakeConfig>(() => getConfig(scene));
   const animatedY = useRef(new Animated.Value(START_Y_POSITION)).current;
   const animatedRotation = useRef(new Animated.Value(0)).current;
   const animatedSwing = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (config) {
+      runAnimation();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config]);
 
   const runAnimation = () => {
     animatedY.setValue(START_Y_POSITION);
@@ -62,13 +63,6 @@ export default function Snowflake({scene}: SnowflakeProps) {
     });
   };
 
-  useEffect(() => {
-    if (config) {
-      runAnimation();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config]);
-
   const rotate = useMemo(() => animatedRotation.interpolate({
     inputRange: [0, 1],
     outputRange: config.rotationDirection
@@ -82,23 +76,23 @@ export default function Snowflake({scene}: SnowflakeProps) {
   }), [animatedSwing, config.swingAmplitude]);
 
   return (
-    <Animated.Text
+    <SnowflakeText
       style={[
-        styles.snowflake,
         {
           left: config.xPosition,
           fontSize: config.size,
           opacity: config.opacity,
           transform: [{translateY: animatedY}, {rotate}, {translateX}],
         },
-      ]}>
+      ]}
+    >
       {config.type}
-    </Animated.Text>
+    </SnowflakeText>
   );
 }
 
-function getConfig(scene) {
-  const size = randomInt(10, 18);
+function getConfig(scene: { width: number; height: number }): SnowflakeConfig {
+  const size = randomInt(5, 10);
   const opacity = randomInt(4, 10) / 10;
   const type = SNOWFLAKE_TYPES[randomInt(0, 2)];
   const xPosition = randomInt(0, scene.width);
@@ -126,6 +120,6 @@ function getConfig(scene) {
   };
 }
 
-function randomInt(min, max) {
+function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
