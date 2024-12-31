@@ -1,7 +1,5 @@
 
 
-https://github.com/user-attachments/assets/34741e79-a7bd-4ffb-a786-74d63e72fefd
-
 ## Installation
 
 1. Clone the repository:
