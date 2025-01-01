@@ -90,5 +90,3 @@ export default function Snowflake({ scene }: SnowflakeProps) {
     </SnowflakeText>
   );
 }
-
-
